@@ -1,0 +1,34 @@
+[
+    {
+      "model": "tasks.category",
+      "pk": 1,
+      "fields": {
+        "name": "Shopping",
+        "color": "#28a745"
+      }
+    },
+    {
+      "model": "tasks.category",
+      "pk": 2,
+      "fields": {
+        "name": "Bills",
+        "color": "#dc3545"
+      }
+    },
+    {
+      "model": "tasks.category",
+      "pk": 3,
+      "fields": {
+        "name": "Work",
+        "color": "#007bff"
+      }
+    },
+    {
+      "model": "tasks.category",
+      "pk": 4,
+      "fields": {
+        "name": "Personal",
+        "color": "#6f42c1"
+      }
+    }
+  ]

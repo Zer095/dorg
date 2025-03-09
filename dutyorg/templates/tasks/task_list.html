@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Tasks{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="my-4">Your Tasks</h2>
+    <a href="{% url 'tasks:task_create' %}" class="btn btn-primary mb-3">New Task</a>
+    
+    <!-- Category Filter (fixed) -->
+    <div class="mb-3">
+        <a href="?category=all" class="btn btn-outline-secondary">All</a>
+        {% for category in categories %}
+        <a href="?category={{ category.id }}" 
+           class="btn btn-outline-secondary" 
+           style="background-color: {{ category.color|default:'#007bff' }}; color: white;">
+           {{ category.name }}
+        </a>
+        {% endfor %}
+    </div>
+
+    <!-- Task List (fixed) -->
+    <div class="list-group">
+        {% for task in tasks %}
+        <div class="list-group-item list-group-item-action">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h5>{{ task.title }}</h5>
+                    <p class="mb-1">{{ task.description }}</p>
+                    <small>Due: {{ task.due_date|date:"M d, Y H:i" }}</small>
+                    <span class="badge bg-{{ task.get_priority_color }} ms-2">{{ task.priority|title }}</span>
+                    {% if task.urgent %}
+                    <span class="badge bg-danger ms-2">Urgent</span>
+                    {% endif %}
+                    <span class="badge bg-{% if task.completed %}success{% else %}warning{% endif %} ms-2">
+                        {% if task.completed %}Completed{% else %}Pending{% endif %}
+                    </span>
+                    {% if task.category %}
+                    <span class="badge ms-2" style="background-color: {{ task.category.color|default:'#007bff' }};">
+                        {{ task.category.name }}
+                    </span>
+                    {% endif %}
+                </div>
+                <div>
+                    <a href="{% url 'tasks:task_update' task.pk %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <a href="{% url 'tasks:task_delete' task.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No tasks found. Create one!</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
